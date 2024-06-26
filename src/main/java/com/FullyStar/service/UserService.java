@@ -2,6 +2,8 @@ package com.FullyStar.service;
 
 import com.FullyStar.pojo.User;
 
+import java.io.IOException;
+
 public interface UserService {
     User findByUsername(String username);
 
@@ -13,4 +15,6 @@ public interface UserService {
     void editUserInfo(String username, String user_name, String user_age, String user_sex, String user_phone, String user_birth);
 
     void resetPassword(String username, String password);
+
+    void startDB() throws IOException, InterruptedException;
 }

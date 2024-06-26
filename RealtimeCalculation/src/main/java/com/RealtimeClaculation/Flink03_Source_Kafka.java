@@ -25,7 +25,7 @@ public class Flink03_Source_Kafka {
         //1.3 消费位置
         properties.setProperty("auto.offset.reset","earliest");
 
-        DataStreamSource<String> stringDataStreamSource = env.addSource(new FlinkKafkaConsumer<String>("bigdatatopic", new SimpleStringSchema(), properties));
+        DataStreamSource<String> stringDataStreamSource = env.addSource(new FlinkKafkaConsumer<String>("customer", new SimpleStringSchema(), properties));
 
         stringDataStreamSource.print();
 
