@@ -1,3 +1,8 @@
+hadoop:
+start-all.sh
+9870
+
+
 zookeeper:
 1. 启动ZK服务:       sh bin/zkServer.sh start
 2. 查看ZK服务状态: sh bin/zkServer.sh status
@@ -9,7 +14,7 @@ zookeeper:
 
 flink:
 start-cluster.sh
-
+8081
 
 
 
@@ -28,3 +33,8 @@ bin/kafka-server-start.sh config/server.properties
 
 查看topic：
 bin/kafka-topics.sh --list --bootstrap-server centos1:9092
+
+clickhouse:
+
+    service clickhouse-server restart
+    clickhouse-client --host 127.0.0.1 --password

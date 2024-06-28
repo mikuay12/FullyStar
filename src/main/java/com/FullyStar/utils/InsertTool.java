@@ -12,7 +12,7 @@ public class InsertTool {
     // 数据库连接参数
 
     public static void startDB() {
-        String url = "jdbc:mysql://localhost:3306/javawebproject"; // 数据库的URL，根据实际情况修改
+        String url = "jdbc:mysql://localhost:3306/bigdata"; // 数据库的URL，根据实际情况修改
         String user = "root"; // 数据库用户名
         String password = "123456"; // 数据库密码
         Connection conn = null;
@@ -25,10 +25,12 @@ public class InsertTool {
             // 2. 打开一个连接
             conn = DriverManager.getConnection(url, user, password);
 
+            pstmt = conn.prepareStatement("DELETE FROM customer;");
+            pstmt.executeUpdate();
+            System.out.println("删除操作执行");
             String line = null;
 //        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
                 String[] data = line.split(",");
                 String Customer_ID = data[0];
                 String Purchase_Date = data[1];
@@ -37,8 +39,6 @@ public class InsertTool {
                 String Quantity = data[4];
                 String Payment_Method = data[5];
                 String Customer_Age = data[6];
-                System.out.println("test");
-
                 String sql = "insert into customer VALUES(?,?,?,?,?,?,?)";
                 // 3. 创建 PreparedStatement 对象执行 SQL
                 pstmt = conn.prepareStatement(sql);
@@ -50,9 +50,7 @@ public class InsertTool {
                 pstmt.setString(6,Payment_Method);
                 pstmt.setString(7,Customer_Age);
                 int result = pstmt.executeUpdate();
-
-                System.out.println(Customer_ID+Purchase_Date+Product_Category+Product_Price+Quantity+Payment_Method+Customer_Age );
-                System.out.println(result);
+                System.out.println("插入操作执行");
                 Thread.sleep(3000);
             }
             reader.close();

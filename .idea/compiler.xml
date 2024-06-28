@@ -7,15 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="FullyStar" />
-        <module name="RealtimeCalculation" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="RealtimeCalculation" target="8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="FullyStar" options="-parameters" />
-      <module name="RealtimeCalculation" options="-parameters" />
+      <module name="FullyStar" options="" />
+      <module name="RealtimeCalculation" options="" />
     </option>
   </component>
 </project>
