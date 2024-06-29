@@ -2,6 +2,7 @@
 import axios from "axios";
 import { User, Lock } from "@element-plus/icons-vue";
 import { ref } from "vue";
+import { ElMessage } from "element-plus";
 //控制注册与登录表单的显示， 默认显示注册
 const isRegister = ref(false);
 const loginconditions = ref({
@@ -59,18 +60,21 @@ import { useRegisterService, useLoginService } from "@/api/user";
 const register = async () => {
   console.log("这是registerconditions：", registerconditions.value);
   let result = await useRegisterService(registerconditions.value);
-  if (result.code == 0) {
+  /*   if (result.code == 0) {
     alert(result.message ? result.message : "注册成功");
   } else {
     alert("注册失败");
-  }
+  } */
+  /* alert(result.message ? result.message : "注册成功"); */
+  ElMessage.success(result.message ? result.message : "注册成功");
 };
 const login = async () => {
   console.log("这是loginconditions：", loginconditions.value);
   let result = await useLoginService(loginconditions.value);
   console.log(result.code);
   if (result.code == 0) {
-    alert(result.message ? result.message : "登录成功");
+    /* alert(result.message ? result.message : "登录成功"); */
+    ElMessage.success(result.message ? result.message : "登录成功");
     router.push("/");
   } else {
     alert("登录失败");

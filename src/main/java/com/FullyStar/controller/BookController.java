@@ -3,9 +3,11 @@ import com.FullyStar.pojo.Book;
 import com.FullyStar.pojo.Result;
 import com.FullyStar.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 public class BookController {
     @Autowired
