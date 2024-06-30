@@ -38,3 +38,4 @@ clickhouse:
 
     service clickhouse-server restart
     clickhouse-client --host 127.0.0.1 --password
+    systemctl stop clickhouse-server

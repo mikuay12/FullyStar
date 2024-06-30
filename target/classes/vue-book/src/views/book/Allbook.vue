@@ -19,7 +19,7 @@ const searchdata = ref({
 });
 const bookList = ref([]);
 axios
-  .post("http://localhost:8080/FindAllBook")
+  .post("http://localhost:8081/FindAllBook")
   .then((result) => {
     bookList.value = result.data.data;
     console.log(result.data.data);
@@ -29,7 +29,7 @@ axios
   });
 const search = function () {
   axios
-    .get("http://localhost:8080/BookSearch", {
+    .get("http://localhost:8081/BookSearch", {
       params: { ...searchdata.value },
     })
     .then((result) => {
@@ -42,7 +42,7 @@ const search = function () {
 };
 const reset = function () {
   axios
-    .post("http://localhost:8080/FindAllBook")
+    .post("http://localhost:8081/FindAllBook")
     .then((result) => {
       bookList.value = result.data.data;
       console.log(result.data.data);
@@ -54,7 +54,7 @@ const reset = function () {
 const bookDetail = function () {
   console.log(searchdata.value);
   axios
-    .get("http://localhost:8080/BookSearch", {
+    .get("http://localhost:8081/BookSearch", {
       params: { ...searchdata.value },
     })
     .then((result) => {
@@ -68,7 +68,7 @@ const bookDetail = function () {
 </script>
 
 <template>
-  <div style="width: 100%; background-color: antiquewhite">
+  <div style="width: 1216px; background-color: antiquewhite; position: fixed">
     <el-input
       v-model="searchdata.keyword"
       style="width: 400px; margin-left: 30%"
@@ -92,7 +92,7 @@ const bookDetail = function () {
   </div>
   <el-card
     v-for="(book, index) in bookList"
-    style="width: 19.8%; height: 48.5%; float: left"
+    style="width: 19.8%; height: 48.5%; float: left; margin-top: 20px"
     ><!-- @click="
       searchdata.keyword = book.book_name;  
       bookDetail();
@@ -107,8 +107,11 @@ const bookDetail = function () {
       />
     </router-link>
     <template #footer>
-      <span>{{ book.book_name }}</span
-      ><span style="float: right">{{ book.book_author }}</span>
+      <span style="float: left">{{ book.book_name }}</span
+      ><span style="float: right; color: red; font-size: 22px">{{
+        book.book_author
+      }}</span
+      ><span style="float: right; color: red">￥</span>
     </template>
   </el-card>
 </template>

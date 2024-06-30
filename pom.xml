@@ -55,7 +55,11 @@
 
 
 
-
+        <dependency>
+            <groupId>ru.yandex.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.1.55</version>
+        </dependency>
 
 
 

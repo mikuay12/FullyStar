@@ -1,9 +1,11 @@
 package com.FullyStar.controller;
+import com.FullyStar.mapper.ClickhouseMapper;
 import com.FullyStar.pojo.Book;
 import com.FullyStar.pojo.Result;
 import com.FullyStar.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,5 +44,13 @@ public class BookController {
     }
 
 
+    @GetMapping("/GetData")
+    public Result getData(String table){
+        return Result.success(ClickhouseMapper.queryTable(table));
+    }
 
+    @GetMapping("/GetData1")
+    public Result getData1(String table){
+        return Result.success(ClickhouseMapper.queryTable(table));
+    }
 }

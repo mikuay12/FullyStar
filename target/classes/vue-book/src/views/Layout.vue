@@ -24,7 +24,7 @@ const searchdata = ref({
 const bookList = ref([]);
 
 axios
-  .post("http://localhost:8080/FindAllBook")
+  .post("http://localhost:8081/FindAllBook")
   .then((result) => {
     bookList.value = result.data.data;
     console.log(result.data.data);
@@ -35,7 +35,7 @@ axios
 
 const search = function () {
   axios
-    .get("http://localhost:8080/BookSearch", {
+    .get("http://localhost:8081/BookSearch", {
       params: { ...searchdata.value },
     })
     .then((result) => {
@@ -305,6 +305,11 @@ const search = function () {
         outline: none;
       }
     }
+  }
+
+  .el-main {
+    padding-left: 20px;
+    padding-top: 0;
   }
 
   .el-footer {

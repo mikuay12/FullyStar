@@ -94,7 +94,7 @@ const bookList = ref([]);
 const divDom = ref(null);
 
 axios
-  .post("http://localhost:8080/FindAllBook")
+  .post("http://localhost:8081/FindAllBook")
   .then((result) => {
     bookList.value = result.data.data;
     console.log(result.data.data);
@@ -106,7 +106,7 @@ console.log("222", divDom.value);
 const reset = function (book_ID) {
   console.log(book_ID);
   axios
-    .get("http://localhost:8080/BanBook", {
+    .get("http://localhost:8081/BanBook", {
       params: { book_ID: book_ID },
     })
     .then((result) => {

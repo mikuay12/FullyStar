@@ -1,0 +1,4 @@
+git status
+git add .
+git commit -m "提交说明"
+git push -u FullyStar main

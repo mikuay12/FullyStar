@@ -1,7 +1,46 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import * as echarts from "echarts";
-const categoryData = reactive([
+import axios from "axios";
+const setdata = ref({
+  table: "test",
+});
+let showData = reactive([]);
+axios
+  .get("http://localhost:8081/GetData1",{
+      params: { ...setdata.value },
+    })
+  .then((result) => {
+    showData = result.data.data;
+    console.log(
+      "result.data.data:",
+      result.data.data,
+      "showData:",
+      showData
+    );
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+console.log(123456789)
+/* const showData = reactive({
+  aaa: "1",
+  bbb: "1",
+  adsfad: "0.5",
+  adsfadsf: "0.5",
+  camera: "13",
+}); */
+const categoryData = reactive([]);
+const stockData = reactive([]);
+/* for (let key in showData) {
+  //for循环let key是对象里面的键，再通过,[]的形式this.objNum[item]去获取对象的value值
+  console.log("key", key);
+  categoryData.push(key);
+  console.log("value", showData[key]);
+  stockData.push(showData[key]);
+} */
+console.log(categoryData, stockData);
+/* const categoryData = reactive([
   "衬衫",
   "羊毛衫",
   "雪纺衫",
@@ -9,7 +48,7 @@ const categoryData = reactive([
   "高跟鞋",
   "袜子",
 ]);
-console.log(categoryData);
+console.log(categoryData); */
 let chart = ref();
 onMounted(() => {
   chartInit();
@@ -40,7 +79,7 @@ function chartInit() {
       {
         name: "销量",
         type: "bar",
-        data: [5, 20, 36, 10, 10, 20],
+        data: stockData,
         barWidth: 30,
         itemStyle: {
           color: function (params) {
