@@ -45,11 +45,6 @@ public class BookController {
 
 
     @GetMapping("/GetData")
-    public Result getData(String table){
-        return Result.success(ClickhouseMapper.queryTable(table));
-    }
-
-    @GetMapping("/GetData1")
     public Result getData1(String table){
         return Result.success(ClickhouseMapper.queryTable(table));
     }

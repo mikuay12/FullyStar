@@ -44,31 +44,4 @@ public class UserServiceImpl implements UserService {
         userMapper.resetPassword(username, password);
     }
 
-    @Override
-    public void startDB() throws IOException, InterruptedException {
-        BufferedReader reader = new BufferedReader(new FileReader("C:\\RinCode\\FullyStar\\src\\main\\resources\\CustomerDatas.csv"));
-        reader.readLine(); // Skip the header line
-
-        String line = null;
-//        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-            String[] data = line.split(",");
-            String Customer_ID = data[0];
-            String Purchase_Date = data[1];
-            String Product_Category = data[2];
-            String Product_Price = data[3];
-            String Quantity = data[4];
-            String Payment_Method = data[5];
-            String Customer_Age = data[6];
-            System.out.println("test");
-
-            System.out.println(Customer_ID+Purchase_Date+Product_Category+Product_Price+Quantity+Payment_Method+Customer_Age );
-
-            userMapper.startDB(Customer_ID, Purchase_Date, Product_Category, Product_Price, Quantity, Payment_Method, Customer_Age);
-            System.out.println("test2");
-            Thread.sleep(3000);
-        }
-        reader.close();
-    }
 }

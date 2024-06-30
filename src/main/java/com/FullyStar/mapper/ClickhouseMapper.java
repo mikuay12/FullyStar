@@ -6,7 +6,6 @@ import ru.yandex.clickhouse.settings.ClickHouseProperties;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -16,68 +15,69 @@ public class ClickhouseMapper {
     private static String address = "jdbc:clickhouse://centos1:8123";
     private static String db = "default";
     private static int socketTimeout = 600000;
-    public static void main(String[] args) throws Exception {
-
-//        Map<String,String>map = ClickhouseMapper.queryTable("test");
-//        // 使用 entrySet() 方法遍历并打印键值对
-//        for (Map.Entry<String, String> entry : map.entrySet()) {
-//            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-//        }
-
-    }
-
 
 
     /* 查询数据*/
     public static Result queryTable(String table){
-
+        Connection connection = getConn();
+        String sql = "";
         switch(table){
             case "PaymentMethod":
-                username = "default";
-                password = "";
-                address = "jdbc:clickhouse://centos1:8123";
-                db = "default";
-                socketTimeout = 600000;
-                break;
+                sql = "select key,sum(value) from PaymentMethod group by key;";
+                ArrayList<Map<String,String>>data = new ArrayList<>();
+                try {
+                    Statement statement = connection.prepareStatement(sql);
+                    ResultSet rs  = statement.executeQuery(sql);
+                    Double sum = 0.0;
+                    while(rs.next()){
+                        Map<String,String>map = new HashMap<>();
+                        map.put("value",rs.getString("sum(value)"));
+                        map.put("name",rs.getString("key"));
+                        sum += Double.parseDouble(rs.getString("sum(value)"));
+                        data.add(map);
+                    }
+                    for(Map<String,String>map : data){
+                        map.put("value",String.format("%.2f", Double.parseDouble(map.get("value")) / sum));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return Result.success(data);
             case "SaleCount":
-                username = "default";
-                password = "";
-                address = "jdbc:clickhouse://centos1:8123";
-                db = "default";
-                socketTimeout = 600000;
-                break;
+                sql = "select key,sum(value) from SaleCount group by key;";
+                ArrayList<ArrayList<String>>list = new ArrayList<>();
+                ArrayList<String>key = new ArrayList<>();
+                ArrayList<String>value = new ArrayList<>();
+                try {
+                    Statement statement = connection.prepareStatement(sql);
+                    ResultSet rs  = statement.executeQuery(sql);
+                    while(rs.next()){
+                        key.add(rs.getString("key"));
+                        value.add(rs.getString("sum(value)"));
+                    }
+                    list.add(key);
+                    list.add(value);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return Result.success(list);
             case "TotalSale":
-
-
-
+                sql = "select sum(value) from TotalSale;";
+                try {
+                    Statement statement = connection.prepareStatement(sql);
+                    ResultSet rs  = statement.executeQuery(sql);
+                    if(rs.next())
+                        return Result.success(rs.getString("sum(value)"));
+                    else
+                        return Result.error("查询错误");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 return Result.error("未找到该表");
         }
-
-
-        String sql = "select key,sum(value) from " + table + " group by key;";
-        Connection connection = getConn();
-//        Map<String, String> map = new HashMap<>();
-        ArrayList<ArrayList<String>>list = new ArrayList<>();
-        ArrayList<String>key = new ArrayList<>();
-        ArrayList<String>value = new ArrayList<>();
-        try {
-            Statement statement = connection.prepareStatement(sql);
-            ResultSet rs  = statement.executeQuery(sql);
-            while(rs.next()){
-                key.add(rs.getString("key"));
-                value.add(rs.getString("sum(value)"));
-//                map.put(rs.getString("key"),rs.getString("sum(value)"));
-
-            }
-            list.add(key);
-            list.add(value);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        //将数据封装到图里
-        return list;
+        return Result.error("未找到该表");
     }
 
     public static Connection getConn() {

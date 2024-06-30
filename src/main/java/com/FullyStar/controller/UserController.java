@@ -2,12 +2,15 @@ package com.FullyStar.controller;
 import com.FullyStar.pojo.Result;
 import com.FullyStar.pojo.User;
 import com.FullyStar.service.UserService;
+import com.FullyStar.utils.TokenUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @CrossOrigin
 @RestController
@@ -16,6 +19,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TokenUtil tokenUtil;
 
     @RequestMapping("/Register")
     public Result register(String username,String password){
@@ -37,19 +42,18 @@ public class UserController {
         if(u.getUser_power().equals("ban"))
             return Result.error("您的账号已被封禁,请联系管理员!");
 
-        session.setAttribute("username",u.getUsername());
-        session.setAttribute("user_name",u.getUser_name());
-        session.setAttribute("user_power",u.getUser_power());
+        String token = tokenUtil.generateToken(u);
 
-
-        Cookie cookie = new Cookie("username",u.getUsername());
+        Cookie cookie = new Cookie("token",token);
         cookie.setMaxAge(7*24*60*60);
         cookie.setPath("/");
         res.addCookie(cookie);
-
-
         return Result.success("登录成功");
+    }
 
+    @GetMapping("/Login")
+    public void login(HttpServletResponse response) throws IOException {
+        response.sendRedirect("localhost:8088/Login");
     }
 
 
@@ -105,6 +109,7 @@ public class UserController {
         session.invalidate();
         return Result.success("登出成功");
     }
+
 
 
 

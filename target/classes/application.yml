@@ -18,8 +18,3 @@ spring:
       mode: always
 server:
   port: 8081
-
-clickhouse:
-  url: jdbc:clickhouse://localhost:8123/default
-  driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
-

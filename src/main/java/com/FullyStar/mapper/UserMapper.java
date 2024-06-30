@@ -1,5 +1,4 @@
 package com.FullyStar.mapper;
-
 import com.FullyStar.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -25,8 +24,5 @@ public interface UserMapper {
 
     @Update("update users_data set password=#{password} where username=#{username}")
     void resetPassword(String username,String password);
-
-    @Insert("insert into customer VALUES(#{customer_id}, #{purchase_date}, #{product_category}, #{product_price}, #{quantity}, #{payment_method}, #{customer_age})")
-    void startDB(String customer_id, String purchase_date, String product_category, String product_price, String quantity,String payment_method, String customer_age);
 
 }
