@@ -44,4 +44,7 @@ public class UserServiceImpl implements UserService {
         userMapper.resetPassword(username, password);
     }
 
+    public void deleteUser(String username) {
+        userMapper.deleteUser(username);
+    }
 }

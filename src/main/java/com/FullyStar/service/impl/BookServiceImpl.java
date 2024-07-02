@@ -30,5 +30,8 @@ public class BookServiceImpl implements BookService {
         return bookMapper.bookSearch(keyword);
     }
 
-
+    @Override
+    public void addBook(Book book) {
+        bookMapper.addBook(book);
+    }
 }

@@ -63,10 +63,7 @@ const purchase = function () {
   </div>
   <hr style="width: 1200px" />
   <div style="margin-top: 50px">
-    <el-input
-      style="width: 300px; height: 40px; float: left"
-      placeholder="请输入id"
-    />
+    
     <div
       style="
         height: 80px;
@@ -86,8 +83,5 @@ const purchase = function () {
     </div>
     <br />
     <br />
-    <el-button type="primary" style="height: 40px; width: 300px; float: left"
-      >点击推送</el-button
-    >
   </div>
 </template>

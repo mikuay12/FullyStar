@@ -20,9 +20,9 @@ public class MVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authenticationInterceptor())
+       registry.addInterceptor(authenticationInterceptor())
 //                表示拦截所有请求
-                .addPathPatterns("/**")
+                  .addPathPatterns("/**")
 //                表示取消对特定路径的拦截
                 .excludePathPatterns("/Login")
                 .excludePathPatterns("/Register")

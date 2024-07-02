@@ -5,7 +5,8 @@ import AllbookVue from "@/views/book/Allbook.vue";
 import DetailbookVue from "@/views/book/Detailbook.vue";
 import ManagebookVue from "@/views/book/Managebook.vue";
 import AddbookVue from "@/views/book/Addbook.vue";
-import BarchartVue from "@/views/chart/barchart.vue";
+import IndexVue from "@/views/dataShow/index.vue";
+import PersonalDataVue from "@/views/user/PersonalData.vue";
 const routes = [
   { path: "/login", component: LoginVue },
   {
@@ -27,8 +28,12 @@ const routes = [
         component: AddbookVue,
       },
       {
-        path: "/chart/Barchart",
-        component: BarchartVue,
+        path: "/datashow/index",
+        component: IndexVue,
+      },
+      {
+        path: "/user/PersonalData",
+        component: PersonalDataVue,
       },
     ],
   },

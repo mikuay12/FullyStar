@@ -3,17 +3,31 @@ import TitleVue from "./Title.vue";
 import FirstVue from "./First.vue";
 import SecondVue from "./Second.vue";
 import ThirdVue from "./Third.vue";
-import FourthVue from "./Fourth.vue";
 </script>
 
 <template>
-  <TitleVue />
-  <div class="main">
-    <FirstVue />
-    <SecondVue />
-    <ThirdVue />
-    <FourthVue />
+  <div class="bg">
+    <TitleVue />
+    <div class="main">
+      <FirstVue />
+      <SecondVue />
+      <ThirdVue />
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.bg {
+  background-color: black;
+  height: 100%;
+  width: 100%;
+}
+.main {
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 3fr 4fr 3fr;
+  gap: 10px;
+}
+</style>

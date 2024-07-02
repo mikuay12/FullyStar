@@ -1,9 +1,6 @@
 package com.FullyStar.mapper;
 import com.FullyStar.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
@@ -24,5 +21,8 @@ public interface UserMapper {
 
     @Update("update users_data set password=#{password} where username=#{username}")
     void resetPassword(String username,String password);
+
+    @Delete("delete from users_data where username=#{username}")
+    void deleteUser(String username);
 
 }

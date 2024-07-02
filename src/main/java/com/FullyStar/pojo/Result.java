@@ -11,16 +11,27 @@ public class Result<T> {
     private String message;
     private T data;
 
-    public static <E> Result<E> success(E data){
-        return new Result<>(0,"操作成功",data);
-    }
+
 
     public static Result success(String message){
         return new Result(0,message,null);
     }
 
+    public static <E> Result<E> success(E data){
+        return new Result<>(0,"操作成功",data);
+    }
+
+    public static <E> Result<E> success(int code,String message,E data){
+        return new Result<>(code,message,data);
+    }
+
     public static Result error(String message){
         return new Result(1,message,null);
     }
+
+    public static Result error(int code,String message){
+        return new Result(code,message,null);
+    }
+
 
 }

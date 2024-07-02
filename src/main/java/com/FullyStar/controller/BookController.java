@@ -15,13 +15,14 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @PostMapping("/FindAllBook")
+    @GetMapping("/FindAllBook")
     public Result findAllBook(){
         return Result.success(bookService.findAllBook());
     }
 
     @PostMapping("/BanBook")
     public Result banBook(String book_ID){
+        System.out.println(book_ID);
         Book book = bookService.findBookByID(book_ID);
         if(book == null)
             return Result.error("该书不存在");
@@ -44,8 +45,14 @@ public class BookController {
     }
 
 
-    @GetMapping("/GetData")
+    @PostMapping("/GetData")
     public Result getData1(String table){
-        return Result.success(ClickhouseMapper.queryTable(table));
+        return ClickhouseMapper.queryTable(table);
+    }
+
+    @PostMapping("/AddBook")
+    public Result addBook(Book book){
+        bookService.addBook(book);
+        return Result.success("添加成功");
     }
 }

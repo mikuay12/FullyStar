@@ -51,7 +51,7 @@ public class InsertTool {
                 pstmt.setString(7,Customer_Age);
                 int result = pstmt.executeUpdate();
                 System.out.println("插入操作执行");
-                Thread.sleep(3000);
+                Thread.sleep(2000);
             }
             reader.close();
         } catch (SQLException | ClassNotFoundException | IOException | InterruptedException e) {

@@ -13,7 +13,7 @@ public class FileUploadController {
     @PostMapping("/Upload")
     public Result upload(MultipartFile file) throws Exception{
         String originalFilenameName = file.getOriginalFilename();
-        file.transferTo(new File("C:\\RinCode\\FullyStar\\src\\main\\resources\\" + originalFilenameName));
-        return Result.success("上传成功");
+        file.transferTo(new File("C:\\RinCode\\FullyStar\\src\\main\\resources\\vue-book\\public\\img\\" + originalFilenameName));
+        return Result.success(originalFilenameName);
     }
 }

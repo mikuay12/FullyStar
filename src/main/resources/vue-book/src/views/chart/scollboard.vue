@@ -1,27 +1,33 @@
 <script setup>
 import { ref, reactive } from "vue";
 const config = reactive({
-  header: ["列1", "列2", "列3"],
+  header: ["用户", "购买商品种类", "商品金额"],
   data: [
-    ["行1列1", "行1列2", "行1列3"],
-    ["行2列1", "行2列2", "行2列3"],
-    ["行3列1", "行3列2", "行3列3"],
-    ["行4列1", "行4列2", "行4列3"],
-    ["行5列1", "行5列2", "行5列3"],
-    ["行6列1", "行6列2", "行6列3"],
-    ["行7列1", "行7列2", "行7列3"],
-    ["行8列1", "行8列2", "行8列3"],
-    ["行9列1", "行9列2", "行9列3"],
-    ["行10列1", "行10列2", "行10列3"],
+    ["id150*****0", "Books", "84.00"],
+    ["id111*****1", "Books", "34.50"],
+    ["id542*****0", "Clothes", "172.50"],
+    ["id120*****8", "Books", "24.00"],
+    ["id410*****0", "Home", "51.50"],
+    ["id210*****8", "Books", "34.50"],
+    ["id150*****0", "Electronics", "34.50"],
+    ["id120*****6", "Electronics", "34.00"],
+    ["id140*****0", "Books", "57.50"],
+    ["id190*****7", "Electronics", "34.00"],
+    ["id210*****0", "Books", "34.50"],
+    ["id130*****5", "Home", "34.50"],
+    ["id140*****0", "Books", "41.00"],
+    ["id177*****6", "Home", "188.00"],
+    ["id187*****0", "Books", "14.00"],
   ],
   index: true,
   columnWidth: [50],
   align: ["center"],
+  waitTime: 100,
 });
 </script>
 
 <template>
-  <dv-scroll-board :config="config" style="width: 100%; height: 220px" />
+  <dv-scroll-board :config="config" style="width: 100%; height: 100%" />
 </template>
 
 <style scoped></style>

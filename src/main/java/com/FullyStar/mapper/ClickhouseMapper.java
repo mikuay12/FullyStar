@@ -67,7 +67,7 @@ public class ClickhouseMapper {
                     Statement statement = connection.prepareStatement(sql);
                     ResultSet rs  = statement.executeQuery(sql);
                     if(rs.next())
-                        return Result.success(rs.getString("sum(value)"));
+                        return Result.success(Double.parseDouble(rs.getString("sum(value)")));
                     else
                         return Result.error("查询错误");
                 } catch (SQLException e) {

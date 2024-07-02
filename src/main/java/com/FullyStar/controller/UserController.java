@@ -3,6 +3,11 @@ import com.FullyStar.pojo.Result;
 import com.FullyStar.pojo.User;
 import com.FullyStar.service.UserService;
 import com.FullyStar.utils.TokenUtil;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -48,7 +54,7 @@ public class UserController {
         cookie.setMaxAge(7*24*60*60);
         cookie.setPath("/");
         res.addCookie(cookie);
-        return Result.success("登录成功");
+        return Result.success(0,"登录成功",token);
     }
 
     @GetMapping("/Login")
@@ -89,15 +95,25 @@ public class UserController {
     }
 
     @PostMapping("/ResetPassword")
-    public Result resetPassword(String username, String password){
+    public Result resetPassword(String username, String password,String newpassword,String repassword){
+        System.out.println(password);
         User u =userService.findByUsername(username);
         if(u == null)
             return Result.error("操作失败，该用户不存在");
-        userService.resetPassword(username,password);
-        return Result.success("修改成功");
+        if(u.getPassword().equals(password)){
+            System.out.println(u.getPassword().equals(password));
+
+            userService.resetPassword(username,newpassword);
+            return Result.success("修改成功");
+        }else{
+            System.out.println(u.getPassword().equals(password));
+            return Result.error("原密码错误");
+        }
+
+
     }
 
-    @PostMapping("/Logout")
+    @GetMapping("/Logout")
     public Result logout(HttpServletRequest req,HttpServletResponse res){
         Cookie[] cookies=req.getCookies();
         for(Cookie cookie: cookies){
@@ -105,9 +121,28 @@ public class UserController {
             cookie.setPath("/");
             res.addCookie(cookie);
         }
-        HttpSession session = req.getSession();
-        session.invalidate();
         return Result.success("登出成功");
+    }
+
+    @GetMapping("/PersonalInfo")
+    public  Result<User> userInfo(@RequestHeader(name="Authorization") String token){
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.none()).build();
+        DecodedJWT jwt = JWT.decode(token);
+        String username=jwt.getAudience().get(0);
+        System.out.println(jwt.getAudience().get(0));
+        User user=userService.findByUsername(username);
+        return Result.success(user);
+    }
+
+    @GetMapping("/DeleteUser")
+    public Result deleteUser(@RequestHeader(name="Authorization") String token){
+        DecodedJWT jwt = JWT.decode(token);
+        String username=jwt.getAudience().get(0);
+        User u =userService.findByUsername(username);
+        if(u == null)
+            return Result.error("操作失败，该用户不存在");
+        userService.deleteUser(username);
+        return Result.success("注销成功");
     }
 
 

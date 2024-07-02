@@ -17,17 +17,32 @@ import {
 const searchdata = ref({
   keyword: "",
 });
+
+
 const bookList = ref([]);
-axios
-  .post("http://localhost:8081/FindAllBook")
-  .then((result) => {
-    bookList.value = result.data.data;
-    console.log(result.data.data);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-const search = function () {
+import { findAllBookService } from "@/api/book.js";
+const findAllBook=async()=>{
+  let result=await findAllBookService();
+  bookList.value=result.data;
+  
+}
+findAllBook();
+
+
+console.log("bookList",bookList.value)
+
+import { searchBookService } from "@/api/book.js";
+const search=async()=>{
+  let result=await searchBookService(searchdata.value);
+  bookList.value = result.data;
+  if (result.code == 0) {
+    /* alert(result.message ? result.message : "登录成功"); */
+    ElMessage.success(result.message ? result.message : "查找成功");
+  } else {
+    alert("查找失败");
+  }
+}
+/* const search = function () {
   axios
     .get("http://localhost:8081/BookSearch", {
       params: { ...searchdata.value },
@@ -39,7 +54,7 @@ const search = function () {
     .catch((err) => {
       console.log(err);
     });
-};
+}; */
 const reset = function () {
   axios
     .post("http://localhost:8081/FindAllBook")
@@ -68,7 +83,7 @@ const bookDetail = function () {
 </script>
 
 <template>
-  <div style="width: 1216px; background-color: antiquewhite; position: fixed">
+  <div style="width: 100%; background-color: antiquewhite">
     <el-input
       v-model="searchdata.keyword"
       style="width: 400px; margin-left: 30%"
@@ -92,7 +107,7 @@ const bookDetail = function () {
   </div>
   <el-card
     v-for="(book, index) in bookList"
-    style="width: 19.8%; height: 48.5%; float: left; margin-top: 20px"
+    style="width: 19.8%; height: 48.5%; float: left"
     ><!-- @click="
       searchdata.keyword = book.book_name;  
       bookDetail();

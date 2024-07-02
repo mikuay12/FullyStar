@@ -11,4 +11,6 @@ public interface BookService {
     void setBookState(String book_ID,String state);
 
     Book[] bookSearch(String keyword);
+
+    void addBook(Book book);
 }

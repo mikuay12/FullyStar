@@ -4,7 +4,7 @@ import * as echarts from "echarts";
 import axios from "axios";
 
 const setdata = ref({
-  table: "test",
+  table: "SaleCount",
 });
 let showData;
 let categoryData = ref([]);
@@ -21,10 +21,19 @@ onMounted(() => {
   setInterval(fetchDataAndDrawChart, 3000);
 });
 
-function fetchDataAndDrawChart() {
-  axios
-    .get("http://localhost:8081/GetData1", {
+
+
+import { barChartService } from "@/api/chart.js";
+const fetchDataAndDrawChart = async()=> {
+  let result=await barChartService(setdata.value);
+  showData = result.data;
+  categoryData.value = showData[0];
+  stockData.value = showData[1];
+  drawChart();
+/*   axios
+    .get("http://localhost:8081/GetData", {
       params: { ...setdata.value },
+      headers: { "Authorization": tokenStore.token },
     })
     .then((result) => {
       showData = result.data.data;
@@ -34,7 +43,7 @@ function fetchDataAndDrawChart() {
     })
     .catch((err) => {
       console.log(err);
-    });
+    }); */
 }
 
 function drawChart() {
@@ -50,8 +59,8 @@ function drawChart() {
     legend: {
       data: ["销量"],
     },
-    xAxis: { type: "value" },
-    yAxis: {
+    yAxis: { type: "value" },
+    xAxis: {
       type: "category",
       data: categoryData.value,
     },
@@ -101,7 +110,7 @@ function drawChart() {
 </script>
 
 <template>
-  <div id="chart-container" style="width: 100%; height: 100%; background-color: black"></div>
+  <div id="chart-container" style="width: 100%; height: 100%"></div>
 </template>
 
 <style scoped></style>

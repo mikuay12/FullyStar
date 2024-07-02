@@ -23,14 +23,13 @@ DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer` (
-  `customer_id` int NOT NULL,
+  `customer_id` int DEFAULT NULL,
   `purchase_date` varchar(45) DEFAULT NULL,
   `product_category` varchar(45) DEFAULT NULL,
   `product_price` varchar(45) DEFAULT NULL,
   `quantity` varchar(45) DEFAULT NULL,
   `payment_method` varchar(45) DEFAULT NULL,
-  `customer_age` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`customer_id`)
+  `customer_age` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-27  1:17:10
+-- Dump completed on 2024-07-02 17:21:38

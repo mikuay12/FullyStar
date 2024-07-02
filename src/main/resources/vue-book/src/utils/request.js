@@ -6,7 +6,22 @@ import axios from "axios";
 //定义一个变量,记录公共的前缀  ,  baseURL
 const baseURL = "/api";
 const instance = axios.create({ baseURL });
+import { useTokenStore } from "@/stores/token";
+//添加请求拦截器
+instance.interceptors.request.use(
+  (config) => {
+    const tokenStore = useTokenStore();
+    if (tokenStore.token) {
+      config.headers.Authorization = tokenStore.token;
+    }
+    return config;
+  },
+  (err) => {
+    Promise.reject(err);
+  }
+);
 
+import router from "@/router"
 //添加响应拦截器
 instance.interceptors.response.use(
   (result) => {
@@ -18,7 +33,8 @@ instance.interceptors.response.use(
     return Promise.reject(result.data);
   },
   (err) => {
-    alert("服务异常");
+    ElMessage.error("请先登录");
+    router.push("/login");
     return Promise.reject(err); //异步的状态转化成失败的状态
   }
 );
